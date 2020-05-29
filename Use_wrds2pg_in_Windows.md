@@ -1,15 +1,13 @@
 Step by Step Instructions to Use wrds2pg in Windows 10
 =========
 
-This repository contains code to pull together data from [WRDS](https://wrds-web.wharton.upenn.edu/wrds/) primarily using the `wrds2pg` Python package.
+This manual includes step by step instructions on how to set up a PostgreSQL database on your computer and feed it with SAS datasets, either automatically pulled from [WRDS](https://wrds-web.wharton.upenn.edu/wrds/) or generated locally.
 
-The code will only work if you have installed `wrds2pg` and have access to WRDS (and also to the data in question). The `wrds2pg` package is available for installation via `pip` (see [here](https://pypi.org/project/wrds2pg)). 
-
-## Step 1. Install softwires
+## Step 1. Install softwares
 
 -	Download and install PostgreSQL from [here](https://www.postgresql.org/download/windows/). Write down your PostgreSQL database and user name, which we will need later.
 -	Download and install Anaconda from [here](https://www.anaconda.com/products/individual);
--	Type in “anaconda” in the search bar located at the left bottom corner, some apps will pop up, click on the right arrow on anaconda prompt (anaconda3), anaconda powershell prompt (anaconda3), spyder (anaconda3), and jupyter Notebook (anaconda3), and click “pin to taskbar”. We will need them later;
+-	Type in “anaconda” in the search bar located at the left bottom corner; some apps will pop up, click on the right arrow on anaconda prompt (anaconda3), anaconda powershell prompt (anaconda3), spyder (anaconda3), and jupyter Notebook (anaconda3), and click “pin to taskbar”. We will need them later;
 -	Click the anaconda prompt (anaconda3) on the taskbar, in the prompt window, type the following and press enter:  `conda update anaconda`
 -	Stay in the anaconda prompt window, type the following and press enter: `conda install spyder=4.1.3`
 -	In the anaconda prompt (anaconda3), type the following and press enter to verify that Pip has been installed correctly (pip version info will show): `pip -V`
@@ -33,7 +31,7 @@ The code will only work if you have installed `wrds2pg` and have access to WRDS 
 
 ## Step 3. Set up a public key and copy to the WRDS server
 
-- Click anaconda powershell prompt (anaconda3) on the taskbar, type the following and press enter: `ssh-keygen -t rsa`    Accept defaults (i.e., just press enter) at prompts, a pair of keyfiles with no passphrase will be generated. It needs to be set up this way so that the key files can be used without being "unlocked" with a password, and the scripts can run without user intervention.
+- Click anaconda powershell prompt (anaconda3) on the taskbar, type the following and press enter: `ssh-keygen -t rsa`    Accept defaults (i.e., just press enter) at prompts, a pair of key files with no passphrase will be generated. It needs to be set up this way so that the key files can be used without being "unlocked" with a password, and the scripts can run without user intervention.
 - Stay in the anaconda powershell prompt (anaconda3) window, type the following and press enter to log into your WRDS account via SSH: `ssh YourWrdsId@wrds-cloud.wharton.upenn.edu`  Type your password at prompt. Then use `mkdir ~/.ssh` to create a directory .ssh in your WRDS home directory. (Skip this step if you already have .ssh directory set up)
 - Stay in the anaconda powershell prompt (anaconda3) window, type the following and press enter to append your public key to your account at the WRDS server: `cat ~/.ssh/id_rsa.pub | ssh iangow@wrds-cloud.wharton.upenn.edu "cat >> ~/.ssh/authorized_keys"` Type your password at prompt if needed.
 - For final check, click anaconda powershell prompt (anaconda3) on the taskbar, use `cat ~/.ssh/id_rsa.pub` to reveal the public key on your computer, and `ssh YourWrdsId @wrds-cloud.wharton.upenn.edu cat ~/.ssh/authorized_keys` to reveal all authorized keys on WRDS server, the public key on your computer should have been appended to the authorized_keys on the WRDS server.
